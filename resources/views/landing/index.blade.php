@@ -16,7 +16,7 @@
 
         $steps = [
             ['icon' => 'search', 'title' => 'Cari Produk', 'desc' => 'Temukan barang yang kamu butuhkan dari penjual terdekat di sekitarmu.'],
-            ['icon' => 'message-circle', 'title' => 'Chat Penjual', 'desc' => 'Tanyakan detail, kondisi, dan nego harga langsung lewat chat.'],
+            ['icon' => 'message-circle', 'title' => 'Chat via WhatsApp', 'desc' => 'Tanyakan detail, kondisi, dan nego harga langsung lewat WhatsApp.'],
             ['icon' => 'handshake', 'title' => 'Sepakati COD', 'desc' => 'Atur waktu, tempat, dan kesepakatan transaksi tatap muka.'],
             ['icon' => 'shield-check', 'title' => 'Selesaikan Transaksi', 'desc' => 'Bayar tunai saat barang diterima. Aman dan minim risiko.'],
         ];
@@ -86,7 +86,7 @@
                     </div>
 
                     <div class="absolute bottom-12 right-2 bg-indigo-600 text-white rounded-2xl shadow-lg px-4 py-2 text-sm font-semibold rotate-3">
-                        💬 Chat penjual langsung
+                        💬 Chat via WhatsApp langsung
                     </div>
                 </div>
             </div>

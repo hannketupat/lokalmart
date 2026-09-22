@@ -26,6 +26,19 @@ class ProfileUpdateRequest extends FormRequest
                 'max:255',
                 Rule::unique(User::class)->ignore($this->user()->id),
             ],
+            'phone' => ['nullable', 'regex:/^(\+?62|0)8[1-9][0-9]{6,11}$/'],
+        ];
+    }
+
+    /**
+     * Get custom validation messages.
+     *
+     * @return array<string, string>
+     */
+    public function messages(): array
+    {
+        return [
+            'phone.regex' => 'Format nomor WhatsApp tidak valid. Contoh: 081234567890',
         ];
     }
 }

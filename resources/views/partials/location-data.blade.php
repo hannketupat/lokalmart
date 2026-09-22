@@ -1,5 +1,8 @@
 @php
     $isExplore = $isExplore ?? false;
+    $defaultLoc = $defaultLoc ?? [];
+    $useUserLocation = $useUserLocation ?? (! $isExplore && empty($defaultLoc));
+    $userLoc = auth()->check() ? auth()->user() : null;
 
     if ($isExplore) {
         $provinceValue = request('province');
@@ -7,9 +10,13 @@
         $districtValue = request('district');
         $requiredAttr = '';
     } else {
-        $provinceValue = old('province');
-        $cityValue = old('city');
-        $districtValue = old('district');
+        $fallback = $useUserLocation
+            ? ['province' => $userLoc?->province ?? '', 'city' => $userLoc?->city ?? '', 'district' => $userLoc?->district ?? '']
+            : [];
+
+        $provinceValue = old('province', $defaultLoc['province'] ?? $fallback['province'] ?? '');
+        $cityValue = old('city', $defaultLoc['city'] ?? $fallback['city'] ?? '');
+        $districtValue = old('district', $defaultLoc['district'] ?? $fallback['district'] ?? '');
         $requiredAttr = 'required';
     }
 

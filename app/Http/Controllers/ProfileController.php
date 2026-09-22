@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Product;
+use App\Models\User;
 use App\Http\Requests\ProfileUpdateRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -11,22 +13,52 @@ use Illuminate\View\View;
 
 class ProfileController extends Controller
 {
-    /**
-     * Display the user's profile form.
-     */
+    public function show(?User $user = null): View
+    {
+        $user = $user ?? auth()->user();
+
+        $productsCount = $user->products()->where('status', 'active')->count();
+        $transactionsCount = $user->buyerTransactions()->count() + $user->sellerTransactions()->count();
+
+        $receivedReviews = $user->receivedReviews()
+            ->with('reviewer')
+            ->latest()
+            ->take(5)
+            ->get();
+
+        $avgRating = $user->receivedReviews()->avg('rating') ?? 0;
+
+        $activeProducts = $user->products()
+            ->where('status', 'active')
+            ->latest()
+            ->take(4)
+            ->get();
+
+        return view('profile.show', compact('user', 'productsCount', 'transactionsCount', 'receivedReviews', 'avgRating', 'activeProducts'));
+    }
+
     public function edit(Request $request): View
     {
         return view('profile.edit', [
             'user' => $request->user(),
+            'receivedReviews' => $request->user()
+                ->receivedReviews()
+                ->with('reviewer')
+                ->latest()
+                ->take(5)
+                ->get(),
         ]);
     }
 
-    /**
-     * Update the user's profile information.
-     */
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
-        $request->user()->fill($request->validated());
+        $data = $request->validated();
+
+        if (isset($data['phone']) && $data['phone'] !== '') {
+            $data['phone'] = normalizePhone($data['phone']);
+        }
+
+        $request->user()->fill($data);
 
         if ($request->user()->isDirty('email')) {
             $request->user()->email_verified_at = null;
@@ -37,9 +69,6 @@ class ProfileController extends Controller
         return Redirect::route('profile.edit')->with('status', 'profile-updated');
     }
 
-    /**
-     * Delete the user's account.
-     */
     public function destroy(Request $request): RedirectResponse
     {
         $request->validateWithBag('userDeletion', [

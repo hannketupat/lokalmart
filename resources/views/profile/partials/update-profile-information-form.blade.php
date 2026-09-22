@@ -17,10 +17,17 @@
         @csrf
         @method('patch')
 
+<div>
+            <x-input-label for="email" :value="__('Email')" />
+            <x-text-input id="email" name="email" type="email" class="mt-1 block w-full" :value="old('email', $user->email)" required autocomplete="username" />
+            <x-input-error class="mt-2" :messages="$errors->get('email')" />
+        </div>
+
         <div>
-            <x-input-label for="name" :value="__('Name')" />
-            <x-text-input id="name" name="name" type="text" class="mt-1 block w-full" :value="old('name', $user->name)" required autofocus autocomplete="name" />
-            <x-input-error class="mt-2" :messages="$errors->get('name')" />
+            <x-input-label for="phone" value="Nomor WhatsApp" />
+            <x-text-input id="phone" name="phone" type="tel" class="mt-1 block w-full" :value="old('phone', $user->phone)" inputmode="numeric" autocomplete="tel" />
+            <p class="mt-1 text-xs text-gray-400">📱 Digunakan pembeli untuk chat kamu via WhatsApp. Pastikan nomor aktif.</p>
+            <x-input-error class="mt-2" :messages="$errors->get('phone')" />
         </div>
 
         <div>

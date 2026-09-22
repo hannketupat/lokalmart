@@ -52,4 +52,10 @@ class Chat extends Model
     {
         return $this->hasOne(Message::class)->latestOfMany();
     }
+
+    // Helper: Lawan bicara dari sudut pandang user tertentu
+    public function otherUser($userId)
+    {
+        return $this->buyer_id === (int) $userId ? $this->seller : $this->buyer;
+    }
 }

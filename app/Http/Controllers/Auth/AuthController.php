@@ -48,7 +48,7 @@ class AuthController extends Controller
         $validated = $request->validate([
             'name' => ['required', 'string', 'min:3', 'max:50'],
             'email' => ['required', 'string', 'email', 'unique:users,email'],
-            'phone' => ['required', 'numeric', 'digits_between:10,15'],
+            'phone' => ['required', 'regex:/^(\+?62|0)8[1-9][0-9]{6,11}$/'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
             'province' => ['required', 'string'],
             'city' => ['required', 'string'],
@@ -60,9 +60,8 @@ class AuthController extends Controller
             'email.required' => 'Email wajib diisi.',
             'email.email' => 'Format email tidak valid.',
             'email.unique' => 'Email sudah terdaftar, gunakan email lain.',
-            'phone.required' => 'Nomor HP wajib diisi.',
-            'phone.numeric' => 'Nomor HP harus berupa angka.',
-            'phone.digits_between' => 'Nomor HP harus terdiri dari 10 - 15 digit.',
+            'phone.required' => 'Nomor WhatsApp wajib diisi.',
+            'phone.regex' => 'Format nomor WhatsApp tidak valid. Contoh: 081234567890',
             'password.required' => 'Password wajib diisi.',
             'password.min' => 'Password minimal 8 karakter.',
             'password.confirmed' => 'Konfirmasi password tidak cocok.',
@@ -70,6 +69,8 @@ class AuthController extends Controller
             'city.required' => 'Pilih kota.',
             'district.required' => 'Pilih kecamatan.',
         ]);
+
+        $validated['phone'] = normalizePhone($validated['phone']);
 
         $user = User::create([
             'name' => $validated['name'],

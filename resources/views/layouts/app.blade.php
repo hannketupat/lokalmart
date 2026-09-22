@@ -28,17 +28,6 @@
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
 </head>
 <body class="font-sans antialiased bg-gray-50 text-gray-900">
-    @auth
-        @php
-            $unread = \App\Models\Message::where('is_read', false)
-                ->where('sender_id', '!=', Auth::id())
-                ->whereHas('chat', function ($query) {
-                    $query->where('buyer_id', Auth::id())->orWhere('seller_id', Auth::id());
-                })
-                ->count();
-        @endphp
-    @endauth
-
     <nav x-data="{ menuOpen: false, open: false }" class="sticky top-0 z-50 bg-white/95 backdrop-blur shadow-sm border-b border-gray-100">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16 gap-4">
@@ -75,18 +64,19 @@
                     </div>
 
                     <div class="flex items-center gap-0.5 sm:gap-1">
-                        <a href="#" title="Favorit" class="relative p-2.5 rounded-full text-gray-600 hover:bg-gray-100">
+                        <a href="{{ route('favorites.index') }}" title="Favorit" class="relative p-2.5 rounded-full text-gray-600 hover:bg-gray-100 {{ request()->routeIs('favorites.index') ? 'text-rose-500' : '' }}">
                             <span class="text-lg leading-none">❤️</span>
-                        </a>
-                        <a href="#" title="Chat" class="relative p-2.5 rounded-full text-gray-600 hover:bg-gray-100">
-                            <span class="text-lg leading-none">💬</span>
-                            @if($unread > 0)
-                                <span class="absolute top-1 right-1 min-w-4 h-4 px-1 grid place-items-center rounded-full bg-rose-500 text-white text-[10px] font-bold">{{ $unread }}</span>
+                            @php $favCount = auth()->user()->favorites()->count(); @endphp
+                            @if($favCount > 0)
+                                <span class="absolute top-1 right-1 min-w-4 h-4 px-1 grid place-items-center rounded-full bg-rose-500 text-white text-[10px] font-bold">{{ $favCount > 99 ? '99+' : $favCount }}</span>
                             @endif
                         </a>
-                        <a href="#" title="Notifikasi" class="relative p-2.5 rounded-full text-gray-600 hover:bg-gray-100">
+                        <a href="{{ route('notifications.index') }}" title="Notifikasi" class="relative p-2.5 rounded-full text-gray-600 hover:bg-gray-100">
                             <span class="text-lg leading-none">🔔</span>
-                            <span class="absolute top-1 right-1 min-w-4 h-4 px-1 grid place-items-center rounded-full bg-rose-500 text-white text-[10px] font-bold">3</span>
+                            @php $notifCount = auth()->user()->unreadNotificationsCount(); @endphp
+                            @if($notifCount > 0)
+                                <span class="absolute top-1 right-1 min-w-4 h-4 px-1 grid place-items-center rounded-full bg-rose-500 text-white text-[10px] font-bold">{{ $notifCount > 99 ? '99+' : $notifCount }}</span>
+                            @endif
                         </a>
 
                         <div class="relative ms-1 sm:ms-2" @click.outside="open = false">
@@ -106,14 +96,17 @@
                                     <p class="text-sm font-semibold text-gray-900 truncate">{{ Auth::user()->name }}</p>
                                     <p class="text-xs text-gray-400 truncate">{{ Auth::user()->email }}</p>
                                 </div>
-                                <a href="{{ route('profile.edit') }}" class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm text-gray-700 hover:bg-gray-50">
+                                <a href="{{ route('profile.show', auth()->user()) }}" class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm text-gray-700 hover:bg-gray-50">
                                     <i data-lucide="user" class="w-5 h-5 text-gray-400"></i> Profil
                                 </a>
-                                <a href="#" class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm text-gray-700 hover:bg-gray-50">
+                                <a href="{{ route('products.my') }}" class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm text-gray-700 hover:bg-gray-50">
                                     <i data-lucide="package" class="w-5 h-5 text-gray-400"></i> Barang Saya
                                 </a>
-                                <a href="#" class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm text-gray-700 hover:bg-gray-50">
+                                <a href="{{ route('transactions.index') }}" class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm text-gray-700 hover:bg-gray-50">
                                     <i data-lucide="receipt-text" class="w-5 h-5 text-gray-400"></i> Transaksi
+                                </a>
+                                <a href="{{ route('favorites.index') }}" class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm text-gray-700 hover:bg-gray-50">
+                                    <i data-lucide="heart" class="w-5 h-5 text-gray-400"></i> Favorit
                                 </a>
                                 <form method="POST" action="{{ route('logout') }}" class="pt-1 mt-1 border-t border-gray-100">
                                     @csrf
@@ -153,6 +146,7 @@
                     <div class="grid grid-cols-2 gap-2">
                         <a href="{{ route('home') }}" class="text-center px-4 py-2.5 rounded-xl text-sm font-semibold {{ request()->routeIs('home') ? 'text-indigo-600 bg-indigo-50' : 'text-gray-700 border border-gray-200' }}">Home</a>
                         <a href="{{ route('explore') }}" class="text-center px-4 py-2.5 rounded-xl text-sm font-semibold {{ request()->routeIs('explore') ? 'text-indigo-600 bg-indigo-50' : 'text-gray-700 border border-gray-200' }}">Jelajahi</a>
+                        <a href="{{ route('favorites.index') }}" class="text-center px-4 py-2.5 rounded-xl text-sm font-semibold {{ request()->routeIs('favorites.index') ? 'text-rose-500 bg-rose-50' : 'text-gray-700 border border-gray-200' }}">❤️ Favorit</a>
                     </div>
                 @else
                     <a href="#kategori" class="block px-3 py-2.5 rounded-xl text-sm font-medium text-gray-700 hover:bg-gray-100">Jelajahi Barang</a>
@@ -196,7 +190,7 @@
                     </a>
                     <p class="mt-4 text-sm text-gray-500 max-w-sm leading-relaxed">
                         Marketplace lokal untuk jual beli barang dengan mudah dan aman melalui COD.
-                        Temukan, chat, dan bertransaksi langsung dengan penjual di sekitarmu.
+                        Temukan, Chat via WhatsApp, dan bertransaksi langsung dengan penjual di sekitarmu.
                     </p>
                     <div class="flex items-center gap-2 mt-5">
                         <a href="#" class="grid place-items-center w-10 h-10 rounded-full bg-gray-100 text-gray-500 hover:bg-indigo-600 hover:text-white transition">
@@ -293,5 +287,8 @@
     <script>
         lucide.createIcons();
     </script>
+    <style>
+        .favorited-heart svg { fill: currentColor; }
+    </style>
 </body>
 </html>

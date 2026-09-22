@@ -118,4 +118,16 @@ class User extends Authenticatable
         $avgRating = $this->receivedReviews()->avg('rating') ?? 0;
         $this->update(['rating' => round($avgRating, 2)]);
     }
+
+    // Relasi: Notifikasi
+    public function notifications()
+    {
+        return $this->hasMany(Notification::class);
+    }
+
+    // Helper: Jumlah notifikasi belum dibaca
+    public function unreadNotificationsCount(): int
+    {
+        return $this->notifications()->where('is_read', false)->count();
+    }
 }

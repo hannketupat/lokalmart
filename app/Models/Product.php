@@ -74,6 +74,18 @@ class Product extends Model
         return $this->hasMany(Favorite::class);
     }
 
+    // Helper: Cek apakah produk di-favorite user tertentu
+    public function isFavoritedBy(?int $userId): bool
+    {
+        if (! $userId) {
+            return false;
+        }
+
+        return Favorite::where('user_id', $userId)
+            ->where('product_id', $this->id)
+            ->exists();
+    }
+
     // Scope: Produk aktif saja
     public function scopeActive($query)
     {
