@@ -4,7 +4,7 @@
 
 @section('content')
     @php
-        $heroImage = $products->first()->image ?? 'https://picsum.photos/seed/lokalmart-hero/720/640';
+        $heroImage = productImageUrl($products->first());
         $categoryColors = [
             'bg-indigo-50 text-indigo-600 group-hover:bg-indigo-600',
             'bg-rose-50 text-rose-500 group-hover:bg-rose-500',
@@ -34,11 +34,11 @@
                         <i data-lucide="map-pin" class="w-3.5 h-3.5"></i>
                         Marketplace Lokal Se-Indonesia
                     </span>
-                    <h1 class="mt-6 text-4xl sm:text-5xl font-extrabold tracking-tight text-gray-900 leading-tight">
+                    <h1 class="mt-6 text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-gray-900 leading-tight">
                         Temukan Barang<br>
                         di <span class="text-indigo-600">Sekitarmu</span>
                     </h1>
-                    <p class="mt-5 text-lg text-gray-500 max-w-lg leading-relaxed">
+                    <p class="mt-5 text-base sm:text-lg text-gray-500 max-w-lg leading-relaxed">
                         Marketplace lokal untuk jual beli barang dengan mudah dan aman melalui COD.
                     </p>
 
@@ -61,7 +61,7 @@
                     </div>
                 </div>
 
-                <div class="relative max-w-xl mx-auto w-full">
+                <div class="relative max-w-xl mx-auto w-full order-last lg:order-first">
                     <div class="absolute -inset-6 bg-gradient-to-tr from-indigo-100 via-violet-100 to-rose-100 rounded-[2.5rem] blur-xl opacity-70"></div>
 
                     <div class="relative bg-white rounded-3xl border border-gray-100 shadow-xl p-3 rotate-1">
@@ -103,13 +103,13 @@
             <a href="#" class="text-sm font-semibold text-indigo-600 hover:text-indigo-800">Lihat semua →</a>
         </div>
 
-        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
+        <div class="grid grid-cols-3 md:grid-cols-6 gap-4">
             @forelse($categories as $category)
-                <a href="#" class="group bg-white rounded-2xl border border-gray-100 shadow-sm p-6 flex flex-col items-center text-center hover:shadow-lg hover:border-indigo-100 transition-all">
-                    <span class="grid place-items-center w-14 h-14 rounded-2xl {{ $categoryColors[$loop->index % count($categoryColors)] }} group-hover:text-white transition-colors">
-                        <i data-lucide="{{ $category->icon }}" class="w-7 h-7"></i>
+                <a href="#" class="group bg-white rounded-2xl border border-gray-100 shadow-sm p-4 md:p-6 flex flex-col items-center text-center hover:shadow-lg hover:border-indigo-100 transition-all">
+                    <span class="grid place-items-center w-12 h-12 md:w-14 md:h-14 rounded-2xl {{ $categoryColors[$loop->index % count($categoryColors)] }} group-hover:text-white transition-colors">
+                        <i data-lucide="{{ $category->icon }}" class="w-6 h-6 md:w-7 md:h-7"></i>
                     </span>
-                    <p class="mt-4 text-sm font-bold text-gray-800">{{ $category->name }}</p>
+                    <p class="mt-3 md:mt-4 text-sm font-bold text-gray-800">{{ $category->name }}</p>
                     <p class="mt-1 text-xs text-gray-400">{{ $category->products_count }} produk</p>
                 </a>
             @empty
@@ -129,7 +129,7 @@
                 <a href="#" class="text-sm font-semibold text-indigo-600 hover:text-indigo-800">Lihat semua →</a>
             </div>
 
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4">
                 @forelse($products as $product)
                     <x-product-card :product="$product" />
                 @empty

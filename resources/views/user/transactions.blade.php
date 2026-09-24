@@ -13,12 +13,12 @@
         ];
     @endphp
 
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8"
+    <div class="max-w-7xl mx-auto px-4 md:px-6 lg:px-8 py-8"
          x-data="{ tab: '{{ request('tab', 'menunggu') }}' }">
         <div class="flex items-end justify-between mb-6">
             <div>
                 <span class="text-xs font-bold uppercase tracking-widest text-indigo-600">Transaksi</span>
-                <h2 class="mt-2 text-2xl font-extrabold text-gray-900">Daftar Transaksi</h2>
+                <h2 class="mt-2 text-xl md:text-2xl lg:text-3xl font-extrabold text-gray-900">Daftar Transaksi</h2>
             </div>
         </div>
 
@@ -45,7 +45,7 @@
             </nav>
         </div>
 
-        @forelse($tabs as $item)
+        @foreach($tabs as $item)
             <div x-show="tab === '{{ $item['key'] }}'" x-cloak class="space-y-4">
                 @php
                     $list = $transactions->where('status', $item['key']);
@@ -136,6 +136,6 @@
                     @endforeach
                 @endif
             </div>
-        @endforelse
+        @endforeach
     </div>
 @endsection

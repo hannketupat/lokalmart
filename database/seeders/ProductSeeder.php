@@ -224,5 +224,108 @@ class ProductSeeder extends Seeder
                 'created_at' => now()->subDays(rand(1, 60)),
             ]);
         }
+
+        $pendingProducts = [
+            [
+                'name' => 'Kain Tenun Troso Jepara Premium',
+                'description' => 'Kain tenun troso asli Jepara dengan motif geometris modern. Bahan katun premium, nyaman dipakai.',
+                'price' => 280000,
+                'condition' => 'baru',
+                'category' => 'Fashion & Pakaian',
+                'city' => 'Semarang',
+            ],
+            [
+                'name' => 'Keripik Pisang Coklat Homemade',
+                'description' => 'Keripik pisang manis dengan lapisan coklat premium. Renyah dan gurih.',
+                'price' => 30000,
+                'condition' => 'baru',
+                'category' => 'Makanan & Minuman',
+                'city' => 'Bandung',
+            ],
+            [
+                'name' => 'Lilin Aromaterapi Sereh Wangi',
+                'description' => 'Lilin aromaterapi dengan ekstrak sereh wangi untuk relaksasi.',
+                'price' => 65000,
+                'condition' => 'baru',
+                'category' => 'Rumah Tangga',
+                'city' => 'Yogyakarta',
+            ],
+        ];
+
+        foreach ($pendingProducts as $index => $productData) {
+            $seller = $users->random();
+            $category = $categories->where('name', $productData['category'])->first();
+
+            Product::create([
+                'user_id' => $seller->id,
+                'category_id' => $category->id,
+                'name' => $productData['name'],
+                'slug' => Str::slug($productData['name']) . '-pending-' . rand(1000, 9999),
+                'description' => $productData['description'],
+                'price' => $productData['price'],
+                'condition' => $productData['condition'],
+                'province' => $seller->province,
+                'city' => $productData['city'],
+                'district' => $seller->district,
+                'image' => 'https://picsum.photos/seed/product-pending' . ($index + 1) . '/600/600',
+                'status' => 'pending',
+                'rejection_reason' => null,
+                'views' => 0,
+                'created_at' => now(),
+            ]);
+        }
+
+        $rejectedProducts = [
+            [
+                'name' => 'Lukisan Akrilik Pemandangan',
+                'description' => 'Lukisan akrilik di kanvas.',
+                'price' => 500000,
+                'condition' => 'baru',
+                'category' => 'Kerajinan Tangan',
+                'city' => 'Denpasar',
+                'rejection_reason' => 'Foto tidak jelas',
+            ],
+            [
+                'name' => 'Sambal Bawang Premium',
+                'description' => 'Sambal enak.',
+                'price' => 40000,
+                'condition' => 'baru',
+                'category' => 'Makanan & Minuman',
+                'city' => 'Surabaya',
+                'rejection_reason' => 'Deskripsi tidak lengkap',
+            ],
+            [
+                'name' => 'Kursi Kayu Jati Antik',
+                'description' => 'Kursi kayu jati dengan ukiran klasik, cocok untuk ruang tamu.',
+                'price' => 1200000,
+                'condition' => 'bekas',
+                'category' => 'Elektronik',
+                'city' => 'Jakarta Selatan',
+                'rejection_reason' => 'Kategori salah',
+            ],
+        ];
+
+        foreach ($rejectedProducts as $index => $productData) {
+            $seller = $users->random();
+            $category = $categories->where('name', $productData['category'])->first();
+
+            Product::create([
+                'user_id' => $seller->id,
+                'category_id' => $category->id,
+                'name' => $productData['name'],
+                'slug' => Str::slug($productData['name']) . '-rejected-' . rand(1000, 9999),
+                'description' => $productData['description'],
+                'price' => $productData['price'],
+                'condition' => $productData['condition'],
+                'province' => $seller->province,
+                'city' => $productData['city'],
+                'district' => $seller->district,
+                'image' => 'https://picsum.photos/seed/product-rejected' . ($index + 1) . '/600/600',
+                'status' => 'rejected',
+                'rejection_reason' => $productData['rejection_reason'],
+                'views' => 0,
+                'created_at' => now(),
+            ]);
+        }
     }
 }

@@ -3,10 +3,10 @@
 @section('title', 'Jual Barang | LokalMart')
 
 @section('content')
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div class="max-w-7xl mx-auto px-4 md:px-6 lg:px-8 py-8">
         <div class="mb-8">
-            <h1 class="text-2xl sm:text-3xl font-extrabold text-gray-900">Jual Barang</h1>
-            <p class="mt-1.5 text-sm text-gray-500">Isi detail barang yang ingin kamu jual</p>
+            <h1 class="text-xl md:text-2xl lg:text-3xl font-extrabold text-gray-900">Jual Barang</h1>
+            <p class="mt-1.5 text-sm md:text-base text-gray-500">Isi detail barang yang ingin kamu jual</p>
         </div>
 
         <div class="lg:grid lg:grid-cols-[1fr_380px] lg:gap-8 items-start">
@@ -129,6 +129,14 @@
                         </p>
                     </div>
 
+                    {{-- INFO REVIEW ADMIN --}}
+                    <div class="mt-3 rounded-2xl bg-blue-50 border border-blue-200 p-4">
+                        <p class="text-sm text-blue-800 leading-relaxed">
+                            <span class="inline-block mr-1">ℹ️</span>
+                            Produk akan direview admin dulu sebelum tayang di halaman explore.
+                        </p>
+                    </div>
+
                     {{-- 9. BUTTON GROUP --}}
                     <div class="mt-6 grid sm:grid-cols-2 gap-3">
                         <button type="button" onclick="submitAction('draft')"
@@ -137,7 +145,7 @@
                         </button>
                         <button type="button" onclick="submitAction('publish')"
                                 class="w-full rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-bold py-3.5 shadow-sm transition">
-                            Publikasikan Barang
+                            Ajukan Publikasi
                         </button>
                     </div>
                 </form>

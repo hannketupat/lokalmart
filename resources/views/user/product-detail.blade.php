@@ -149,7 +149,7 @@
             <div class="flex items-end justify-between mb-6">
                 <div>
                     <span class="text-xs font-bold uppercase tracking-widest text-indigo-600">Penjual</span>
-                    <h2 class="mt-2 text-2xl font-extrabold text-gray-900">Informasi Penjual</h2>
+                    <h2 class="mt-2 text-xl md:text-2xl lg:text-3xl font-extrabold text-gray-900">Informasi Penjual</h2>
                 </div>
             </div>
 
@@ -183,7 +183,7 @@
             <div class="flex items-end justify-between mb-6">
                 <div>
                     <span class="text-xs font-bold uppercase tracking-widest text-indigo-600">Lokasi</span>
-                    <h2 class="mt-2 text-2xl font-extrabold text-gray-900">Lokasi Penjual</h2>
+                    <h2 class="mt-2 text-xl md:text-2xl lg:text-3xl font-extrabold text-gray-900">Lokasi Penjual</h2>
                 </div>
             </div>
 
@@ -212,7 +212,7 @@
             <div class="flex items-end justify-between mb-6">
                 <div>
                     <span class="text-xs font-bold uppercase tracking-widest text-indigo-600">Penjual ini</span>
-                    <h2 class="mt-2 text-2xl font-extrabold text-gray-900">Barang lainnya dari penjual ini</h2>
+                    <h2 class="mt-2 text-xl md:text-2xl lg:text-3xl font-extrabold text-gray-900">Barang lainnya dari penjual ini</h2>
                 </div>
             </div>
 
@@ -222,7 +222,7 @@
                     <p class="mt-4 text-sm text-gray-500 font-medium">Belum ada barang lain dari penjual ini.</p>
                 </div>
             @else
-                <div class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5">
+                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4">
                     @foreach($relatedProducts as $related)
                         <x-product-card :product="$related" />
                     @endforeach

@@ -10,7 +10,7 @@
             <div class="absolute -top-20 -right-20 w-72 h-72 rounded-full bg-indigo-100 blur-3xl opacity-60"></div>
             <div class="absolute top-32 -left-24 w-64 h-64 rounded-full bg-violet-100 blur-3xl opacity-50"></div>
 
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14">
+            <div class="max-w-7xl mx-auto px-4 md:px-6 lg:px-8 py-10 sm:py-14">
                 <div class="relative bg-white/80 backdrop-blur rounded-3xl border border-indigo-100 shadow-sm overflow-hidden">
                     <div class="absolute -bottom-16 -left-16 w-64 h-64 rounded-full bg-violet-100 blur-3xl opacity-40 pointer-events-none"></div>
 
@@ -20,7 +20,7 @@
                                 <i data-lucide="map-pin" class="w-3.5 h-3.5"></i>
                                 Lokasi Kamu
                             </span>
-                            <h1 class="mt-3 text-2xl sm:text-3xl font-extrabold tracking-tight text-gray-900">
+                            <h1 class="mt-3 text-xl md:text-2xl lg:text-3xl font-extrabold tracking-tight text-gray-900">
                                 Barang di sekitar kamu
                             </h1>
                             <p class="mt-2 text-sm sm:text-base text-gray-500 flex items-center gap-1.5">
@@ -81,11 +81,11 @@
         @endphp
 
         {{-- KATEGORI --}}
-        <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <section class="max-w-7xl mx-auto px-4 md:px-6 lg:px-8 py-12">
             <div class="flex items-end justify-between mb-8">
                 <div>
                     <span class="text-xs font-bold uppercase tracking-widest text-indigo-600">Kategori</span>
-                    <h2 class="mt-2 text-2xl sm:text-3xl font-extrabold text-gray-900">Jelajahi Kategori</h2>
+                    <h2 class="mt-2 text-xl md:text-2xl lg:text-3xl font-extrabold text-gray-900">Jelajahi Kategori</h2>
                 </div>
                 <a href="{{ route('explore') }}" class="text-sm font-semibold text-indigo-600 hover:text-indigo-800 shrink-0">Lihat semua →</a>
             </div>
@@ -108,17 +108,17 @@
 
         {{-- REKOMENDASI --}}
         <section class="bg-white border-y border-gray-100">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div class="max-w-7xl mx-auto px-4 md:px-6 lg:px-8 py-12">
                 <div class="flex items-end justify-between mb-8">
                     <div>
                         <span class="text-xs font-bold uppercase tracking-widest text-indigo-600">Rekomendasi</span>
-                        <h2 class="mt-2 text-2xl sm:text-3xl font-extrabold text-gray-900">Rekomendasi untuk kamu</h2>
-                        <p class="mt-2 text-sm text-gray-500">Barang terbaru dari penjual di sekitar lokasimu.</p>
+                        <h2 class="mt-2 text-xl md:text-2xl lg:text-3xl font-extrabold text-gray-900">Rekomendasi untuk kamu</h2>
+                        <p class="mt-2 text-sm md:text-base text-gray-500">Barang terbaru dari penjual di sekitar lokasimu.</p>
                     </div>
                     <a href="{{ route('explore') }}" class="text-sm font-semibold text-indigo-600 hover:text-indigo-800 shrink-0">Lihat semua →</a>
                 </div>
 
-                <div class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5">
+                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4">
                     @forelse($recommended as $product)
                         <x-product-card :product="$product" />
                     @empty

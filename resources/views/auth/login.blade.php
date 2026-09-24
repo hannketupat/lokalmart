@@ -24,7 +24,7 @@
                         </div>
                     </div>
 
-                    <h1 class="mt-8 text-3xl sm:text-4xl font-extrabold tracking-tight text-gray-900">
+                    <h1 class="mt-8 text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight text-gray-900">
                         Selamat Datang Kembali
                     </h1>
                     <p class="mt-2 text-base text-gray-500">

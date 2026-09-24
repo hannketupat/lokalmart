@@ -35,7 +35,7 @@
         $canReview = $transaction->status === 'selesai' && !$myReview;
     @endphp
 
-    <div x-data="{ ratingModalOpen: false }" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div x-data="{ ratingModalOpen: false }" class="max-w-7xl mx-auto px-4 md:px-6 lg:px-8 py-8">
         {{-- BREADCRUMB --}}
         <nav class="flex items-center gap-1.5 text-sm text-gray-500 min-w-0">
             <a href="{{ route('home') }}" class="hover:text-indigo-600 font-medium shrink-0">Home</a>
@@ -49,7 +49,7 @@
         <div class="mt-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
             <div>
                 <p class="text-xs font-bold uppercase tracking-widest text-indigo-600">Detail Transaksi</p>
-                <h1 class="mt-2 text-2xl font-extrabold text-gray-900">
+                <h1 class="mt-2 text-xl md:text-2xl lg:text-3xl font-extrabold text-gray-900">
                     {{ $transaction->product->name }}
                 </h1>
                 <p class="mt-1 text-sm text-gray-400">Transaksi #{{ $transaction->id }} • {{ $transaction->created_at->format('d M Y H:i') }}</p>

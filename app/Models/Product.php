@@ -22,6 +22,7 @@ class Product extends Model
         'district',
         'image',
         'status',
+        'rejection_reason',
         'views',
     ];
 
@@ -92,10 +93,28 @@ class Product extends Model
         return $query->where('status', 'active');
     }
 
+    // Scope: Produk menunggu moderasi
+    public function scopePending($query)
+    {
+        return $query->where('status', 'pending');
+    }
+
     // Scope: Produk tersedia (belum terjual)
     public function scopeAvailable($query)
     {
         return $query->where('status', 'active')->where('status', '!=', 'sold');
+    }
+
+    // Helper: Cek apakah produk menunggu moderasi
+    public function isPending(): bool
+    {
+        return $this->status === 'pending';
+    }
+
+    // Helper: Cek apakah produk ditolak
+    public function isRejected(): bool
+    {
+        return $this->status === 'rejected';
     }
 
     // Helper: Format harga

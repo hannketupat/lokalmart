@@ -15,7 +15,7 @@ class FavoriteController extends Controller
             ->latest()
             ->get()
             ->pluck('product')
-            ->filter()
+            ->filter(fn ($product) => $product && $product->status === 'active')
             ->values();
 
         return view('user.favorites', compact('favorites'));

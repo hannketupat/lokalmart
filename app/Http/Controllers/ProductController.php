@@ -125,7 +125,7 @@ class ProductController extends Controller
             'city' => $validated['city'],
             'district' => $validated['district'],
             'image' => $image,
-            'status' => $validated['action'] === 'draft' ? 'draft' : 'active',
+            'status' => $validated['action'] === 'draft' ? 'draft' : 'pending',
         ]);
 
         return redirect()
@@ -142,7 +142,9 @@ class ProductController extends Controller
         $counts = [
             'semua' => (clone $base)->count(),
             'aktif' => (clone $base)->where('status', 'active')->count(),
+            'pending' => (clone $base)->where('status', 'pending')->count(),
             'draft' => (clone $base)->where('status', 'draft')->count(),
+            'ditolak' => (clone $base)->where('status', 'rejected')->count(),
             'transaksi' => (clone $base)->whereHas('transactions', function ($query) {
                 $query->whereIn('status', ['menunggu', 'disetujui', 'menunggu_cod']);
             })->count(),
@@ -156,8 +158,12 @@ class ProductController extends Controller
 
         if ($tab === 'aktif') {
             $base->where('status', 'active');
+        } elseif ($tab === 'pending') {
+            $base->where('status', 'pending');
         } elseif ($tab === 'draft') {
             $base->where('status', 'draft');
+        } elseif ($tab === 'ditolak') {
+            $base->where('status', 'rejected');
         } elseif ($tab === 'transaksi') {
             $base->whereHas('transactions', function ($query) {
                 $query->whereIn('status', ['menunggu', 'disetujui', 'menunggu_cod']);
